@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Model Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="header-title">
+                    <i class="fas fa-brain"></i>
+                    <h1>ML Model Dashboard</h1>
+                </div>
+                <div class="header-actions">
+                    <button id="refreshBtn" class="btn btn-primary">
+                        <i class="fas fa-sync-alt"></i>
+                        Refresh Data
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="loading-container">
+            <div class="spinner"></div>
+            <p>Loading model data...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="error-container" style="display: none;">
+            <div class="error-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Error Loading Data</h3>
+                <p id="errorText"></p>
+                <button id="retryBtn" class="btn btn-secondary">Try Again</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main id="mainContent" class="main-content" style="display: none;">
+            
+            <!-- Model Overview Cards -->
+            <section class="overview-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> Model Overview</h2>
+                </div>
+                <div class="cards-grid">
+                    <div class="card metric-card">
+                        <div class="card-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Accuracy</h3>
+                            <div class="metric-value" id="accuracyValue">--</div>
+                            <div class="metric-label">Overall Performance</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card metric-card">
+                        <div class="card-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Algorithm</h3>
+                            <div class="metric-value" id="algorithmValue">--</div>
+                            <div class="metric-label">Model Type</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card metric-card">
+                        <div class="card-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Dataset Size</h3>
+                            <div class="metric-value" id="datasetValue">--</div>
+                            <div class="metric-label">Training Samples</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card metric-card">
+                        <div class="card-icon">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Features</h3>
+                            <div class="metric-value" id="featuresValue">--</div>
+                            <div class="metric-label">Input Variables</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Performance Metrics -->
+            <section class="metrics-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-bar"></i> Performance Metrics</h2>
+                </div>
+                <div class="metrics-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Classification Metrics</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="metrics-table">
+                                <div class="metric-row">
+                                    <span class="metric-name">Precision (Class 0)</span>
+                                    <span class="metric-value" id="precision0">--</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-name">Precision (Class 1)</span>
+                                    <span class="metric-value" id="precision1">--</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-name">Recall (Class 0)</span>
+                                    <span class="metric-value" id="recall0">--</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-name">Recall (Class 1)</span>
+                                    <span class="metric-value" id="recall1">--</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-name">F1-Score (Class 0)</span>
+                                    <span class="metric-value" id="f1score0">--</span>
+                                </div>
+                                <div class="metric-row">
+                                    <span class="metric-name">F1-Score (Class 1)</span>
+                                    <span class="metric-value" id="f1score1">--</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Confusion Matrix</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="confusion-matrix" id="confusionMatrix">
+                                <!-- Matrix will be generated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Visualizations -->
+            <section class="charts-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-pie"></i> Data Visualizations</h2>
+                </div>
+                <div class="charts-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Performance Overview</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>Prediction Results</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="predictionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Predictions Table -->
+            <section class="predictions-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-table"></i> Sample Predictions</h2>
+                    <div class="section-actions">
+                        <span class="info-text">Showing first 10 predictions</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table id="predictionsTable" class="predictions-table">
+                                <thead>
+                                    <tr>
+                                        <th>Index</th>
+                                        <th>Predicted</th>
+                                        <th>Actual</th>
+                                        <th>Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table rows will be generated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

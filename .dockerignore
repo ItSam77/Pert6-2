@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+venv/
+
+# VCS & tooling
+.git/
+.gitignore
+.vscode/
+.idea/
+*.log
+.DS_Store
+

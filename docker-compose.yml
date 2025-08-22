@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  pert6:
+    build: .
+    container_name: pert6_app
+    ports:
+      - "5000:5000"  # Changed from 3000:3000
+    volumes:
+      - ./artifacts:/app/artifacts
+    restart: unless-stopped
