@@ -6,7 +6,13 @@
       45000,
       14
     ],
-    "features_count": 13
+    "features_count": 13,
+    "train_size": 36000,
+    "test_size": 9000,
+    "train_test_ratio": {
+      "train": 0.8,
+      "test": 0.2
+    }
   },
   "predictions": {
     "predicted_values": [

@@ -12,6 +12,7 @@ const retryBtn = document.getElementById('retryBtn');
 // Chart instances
 let performanceChart = null;
 let predictionChart = null;
+let splitChart = null;
 
 // Initialize the dashboard
 document.addEventListener('DOMContentLoaded', function() {
@@ -83,6 +84,7 @@ async function loadDashboardData() {
         
         // Update UI with data
         updateModelOverview(summaryData.summary);
+        updateTrainTestSplit(summaryData.summary);
         updatePerformanceMetrics(summaryData.summary);
         updateConfusionMatrix(summaryData.summary.confusion_matrix);
         updateCharts(summaryData.summary);
@@ -124,6 +126,22 @@ function updateModelOverview(summary) {
     document.getElementById('algorithmValue').textContent = summary.algorithm;
     document.getElementById('datasetValue').textContent = summary.data_shape[0].toLocaleString();
     document.getElementById('featuresValue').textContent = summary.features_count;
+}
+
+// Update train/test split information
+function updateTrainTestSplit(summary) {
+    const trainSize = summary.train_size || 0;
+    const testSize = summary.test_size || 0;
+    const trainRatio = Math.round((summary.train_test_ratio?.train || 0.8) * 100);
+    const testRatio = Math.round((summary.train_test_ratio?.test || 0.2) * 100);
+    
+    document.getElementById('trainSizeValue').textContent = trainSize.toLocaleString();
+    document.getElementById('trainPercentage').textContent = `${trainRatio}% of total`;
+    
+    document.getElementById('testSizeValue').textContent = testSize.toLocaleString();
+    document.getElementById('testPercentage').textContent = `${testRatio}% of total`;
+    
+    document.getElementById('splitRatio').textContent = `${trainRatio}:${testRatio}`;
 }
 
 // Update performance metrics
@@ -172,6 +190,7 @@ function updateConfusionMatrix(confusionMatrix) {
 function updateCharts(summary) {
     updatePerformanceChart(summary);
     updatePredictionChart(summary);
+
 }
 
 // Update performance chart
@@ -190,16 +209,16 @@ function updatePerformanceChart(summary) {
                 {
                     label: 'Class 0',
                     data: [summary.precision.class_0, summary.recall.class_0, summary.f1_score.class_0],
-                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
-                    borderColor: 'rgba(102, 126, 234, 1)',
+                    backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
                     borderWidth: 2,
                     borderRadius: 8
                 },
                 {
                     label: 'Class 1',
                     data: [summary.precision.class_1, summary.recall.class_1, summary.f1_score.class_1],
-                    backgroundColor: 'rgba(118, 75, 162, 0.8)',
-                    borderColor: 'rgba(118, 75, 162, 1)',
+                    backgroundColor: 'rgba(139, 92, 246, 0.8)',
+                    borderColor: 'rgba(139, 92, 246, 1)',
                     borderWidth: 2,
                     borderRadius: 8
                 }
@@ -212,6 +231,7 @@ function updatePerformanceChart(summary) {
                 legend: {
                     position: 'top',
                     labels: {
+                        color: '#e2e8f0',
                         font: {
                             family: 'Inter',
                             size: 12
@@ -221,6 +241,7 @@ function updatePerformanceChart(summary) {
                 title: {
                     display: true,
                     text: 'Classification Metrics by Class',
+                    color: '#e2e8f0',
                     font: {
                         family: 'Inter',
                         size: 14,
@@ -233,6 +254,7 @@ function updatePerformanceChart(summary) {
                     beginAtZero: true,
                     max: 100,
                     ticks: {
+                        color: '#94a3b8',
                         callback: function(value) {
                             return value + '%';
                         },
@@ -242,11 +264,12 @@ function updatePerformanceChart(summary) {
                         }
                     },
                     grid: {
-                        color: 'rgba(0,0,0,0.1)'
+                        color: 'rgba(148, 163, 184, 0.2)'
                     }
                 },
                 x: {
                     ticks: {
+                        color: '#94a3b8',
                         font: {
                             family: 'Inter',
                             size: 11
@@ -282,12 +305,12 @@ function updatePredictionChart(summary) {
             datasets: [{
                 data: [correctPredictions, incorrectPredictions],
                 backgroundColor: [
-                    'rgba(56, 161, 105, 0.8)',
-                    'rgba(229, 62, 62, 0.8)'
+                    'rgba(16, 185, 129, 0.8)',
+                    'rgba(239, 68, 68, 0.8)'
                 ],
                 borderColor: [
-                    'rgba(56, 161, 105, 1)',
-                    'rgba(229, 62, 62, 1)'
+                    'rgba(16, 185, 129, 1)',
+                    'rgba(239, 68, 68, 1)'
                 ],
                 borderWidth: 2
             }]
@@ -299,6 +322,7 @@ function updatePredictionChart(summary) {
                 legend: {
                     position: 'bottom',
                     labels: {
+                        color: '#e2e8f0',
                         padding: 20,
                         font: {
                             family: 'Inter',
@@ -309,6 +333,7 @@ function updatePredictionChart(summary) {
                 title: {
                     display: true,
                     text: `Prediction Accuracy (${total.toLocaleString()} total)`,
+                    color: '#e2e8f0',
                     font: {
                         family: 'Inter',
                         size: 14,
@@ -316,6 +341,11 @@ function updatePredictionChart(summary) {
                     }
                 },
                 tooltip: {
+                    backgroundColor: 'rgba(30, 42, 74, 0.9)',
+                    titleColor: '#e2e8f0',
+                    bodyColor: '#e2e8f0',
+                    borderColor: 'rgba(59, 130, 246, 0.5)',
+                    borderWidth: 1,
                     callbacks: {
                         label: function(context) {
                             const percentage = ((context.parsed / total) * 100).toFixed(1);
@@ -327,6 +357,8 @@ function updatePredictionChart(summary) {
         }
     });
 }
+
+
 
 
 

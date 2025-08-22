@@ -96,7 +96,7 @@ docker compose up -d --build
 
 ### 4. Access the Application
 
-- **Dashboard**: [http://localhost:3000](http://localhost:3000)
+- **Dashboard**: [http://localhost:3000/dashboard/index.html](http://localhost:3000/dashboard/index.html)
 - **API Health Check**: [http://localhost:3000/api/health](http://localhost:3000/api/health)
 
 ## 📡 API Endpoints
@@ -112,27 +112,6 @@ The Flask backend provides several RESTful endpoints:
 | `/api/model/metrics/summary` | GET | Dashboard-ready metric summary |
 | `/api/model/all` | GET | Complete model data dump |
 
-### Example API Response
-
-```json
-{
-  "summary": {
-    "algorithm": "Random Forest",
-    "accuracy": 92.91,
-    "data_shape": [45000, 14],
-    "features_count": 13,
-    "precision": {
-      "class_0": 93.87,
-      "class_1": 88.98
-    },
-    "recall": {
-      "class_0": 97.22,
-      "class_1": 77.91
-    },
-    "confusion_matrix": [[6796, 194], [444, 1566]]
-  }
-}
-```
 
 ## 🔧 Development & Customization
 
@@ -207,11 +186,3 @@ Enable Flask debug mode for detailed error messages:
 app.run(debug=True, host='0.0.0.0', port=5000)
 ```
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Make your changes and test thoroughly
-4. Commit with descriptive messages: `git commit -m "Add feature X"`
-5. Push to your fork: `git push origin feature-name`
-6. Create a Pull Request

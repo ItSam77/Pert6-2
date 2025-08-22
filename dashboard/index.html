@@ -43,6 +43,9 @@
             </div>
         </div>
 
+        <!-- Animated Background -->
+        <div class="animated-bg"></div>
+
         <!-- Main Content -->
         <main id="mainContent" class="main-content" style="display: none;">
             
@@ -81,7 +84,7 @@
                         <div class="card-content">
                             <h3>Dataset Size</h3>
                             <div class="metric-value" id="datasetValue">--</div>
-                            <div class="metric-label">Training Samples</div>
+                            <div class="metric-label">Total Samples</div>
                         </div>
                     </div>
                     
@@ -93,6 +96,48 @@
                             <h3>Features</h3>
                             <div class="metric-value" id="featuresValue">--</div>
                             <div class="metric-label">Input Variables</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Train/Test Split Section -->
+            <section class="train-test-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-cut"></i> Data Split Information</h2>
+                    <div class="info-text">Training and testing data distribution</div>
+                </div>
+                <div class="train-test-grid">
+                    <div class="card split-card">
+                        <div class="card-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Training Set</h3>
+                            <div class="metric-value" id="trainSizeValue">--</div>
+                            <div class="metric-label" id="trainPercentage">-- samples</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card split-card">
+                        <div class="card-icon">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Testing Set</h3>
+                            <div class="metric-value" id="testSizeValue">--</div>
+                            <div class="metric-label" id="testPercentage">-- samples</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card split-card">
+                        <div class="card-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Split Ratio</h3>
+                            <div class="metric-value" id="splitRatio">--</div>
+                            <div class="metric-label">Train : Test</div>
                         </div>
                     </div>
                 </div>
@@ -162,7 +207,9 @@
                             <h3>Performance Overview</h3>
                         </div>
                         <div class="card-body">
-                            <canvas id="performanceChart"></canvas>
+                            <div class="chart-container">
+                                <canvas id="performanceChart"></canvas>
+                            </div>
                         </div>
                     </div>
 
@@ -171,9 +218,13 @@
                             <h3>Prediction Results</h3>
                         </div>
                         <div class="card-body">
-                            <canvas id="predictionChart"></canvas>
+                            <div class="chart-container">
+                                <canvas id="predictionChart"></canvas>
+                            </div>
                         </div>
                     </div>
+
+                    
                 </div>
             </section>
 

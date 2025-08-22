@@ -123,6 +123,9 @@ def get_metrics_summary():
         "accuracy": round(model_info.get("accuracy", 0) * 100, 2),
         "data_shape": model_info.get("data_shape", [0, 0]),
         "features_count": model_info.get("features_count", 0),
+        "train_size": model_info.get("train_size", 0),
+        "test_size": model_info.get("test_size", 0),
+        "train_test_ratio": model_info.get("train_test_ratio", {"train": 0.8, "test": 0.2}),
         "total_predictions": predictions.get("total_predictions", 0),
         "precision": {
             "class_0": round(classification_report.get("0.0", {}).get("precision", 0) * 100, 2),

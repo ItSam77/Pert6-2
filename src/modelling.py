@@ -42,7 +42,10 @@ def train_model(data):
         'predictions': y_pred.tolist(),
         'actual': y_test.tolist(),
         'classification_report': class_report,
-        'confusion_matrix': conf_matrix.tolist()
+        'confusion_matrix': conf_matrix.tolist(),
+        'train_size': len(X_train),
+        'test_size': len(X_test),
+        'train_test_ratio': {'train': 0.8, 'test': 0.2}
     }
 
 def model_to_json():
@@ -61,7 +64,10 @@ def model_to_json():
             "algorithm": "Random Forest",
             "accuracy": float(results['accuracy']),
             "data_shape": data.shape,
-            "features_count": len(data.columns) - 1
+            "features_count": len(data.columns) - 1,
+            "train_size": results['train_size'],
+            "test_size": results['test_size'],
+            "train_test_ratio": results['train_test_ratio']
         },
         "predictions": {
             "predicted_values": results['predictions'][:10],  # First 10 predictions
