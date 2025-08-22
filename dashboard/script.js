@@ -86,7 +86,7 @@ async function loadDashboardData() {
         updatePerformanceMetrics(summaryData.summary);
         updateConfusionMatrix(summaryData.summary.confusion_matrix);
         updateCharts(summaryData.summary);
-        updatePredictionsTable(predictionsData.predictions);
+
         
         showMainContent();
         
@@ -328,35 +328,7 @@ function updatePredictionChart(summary) {
     });
 }
 
-// Update predictions table
-function updatePredictionsTable(predictions) {
-    const tableBody = document.querySelector('#predictionsTable tbody');
-    tableBody.innerHTML = '';
-    
-    // Show first 10 predictions
-    const samplePredictions = predictions.slice(0, 10);
-    
-    samplePredictions.forEach(prediction => {
-        const row = document.createElement('tr');
-        
-        const isCorrect = prediction.correct;
-        const resultClass = isCorrect ? 'result-correct' : 'result-incorrect';
-        const resultIcon = isCorrect ? 'fas fa-check-circle' : 'fas fa-times-circle';
-        const resultText = isCorrect ? 'Correct' : 'Incorrect';
-        
-        row.innerHTML = `
-            <td>${prediction.index}</td>
-            <td>${prediction.predicted}</td>
-            <td>${prediction.actual}</td>
-            <td class="${resultClass}">
-                <i class="${resultIcon} result-icon"></i>
-                ${resultText}
-            </td>
-        `;
-        
-        tableBody.appendChild(row);
-    });
-}
+
 
 // Utility function to format numbers
 function formatNumber(num, decimals = 2) {
